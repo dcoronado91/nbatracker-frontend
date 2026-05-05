@@ -1,18 +1,11 @@
 const API_URL = "http://localhost:8080";
 
+import { getPlayers } from "./api/players";
+
 async function loadPlayers() {
-  try {
-    const res = await fetch(`${API_URL}/players`);
-    const players = await res.json();
-
-    console.log(players);
-
-    renderPlayers(players);
-  } catch (error) {
-    console.error("Error:", error);
-  }
+  const players = await getPlayers();
+  renderPlayers(players);
 }
-
 function renderPlayers(players) {
   const app = document.getElementById("app");
 
