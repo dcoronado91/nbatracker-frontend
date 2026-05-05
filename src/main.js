@@ -3,6 +3,10 @@ const API_URL = "http://localhost:8080";
 import { getPlayers } from "./api/players";
 import { createPlayer } from "./api/players";
 import { deletePlayer } from "./api/players";
+import { updatePlayer } from "./api/players";
+
+// Variable para controlar edición
+let editingId = null;
 
 async function loadPlayers() {
   const players = await getPlayers();
@@ -22,6 +26,7 @@ function renderPlayers(players) {
       <p>Equipo: ${player.team}</p>
       <p>🏆 Campeonatos: ${player.championships}</p>
       <button data-id="${player.id}" class="delete-btn">Eliminar Jugador</button>
+      <button data-id="${player.id}" class="edit-btn">Editar</button>
       <hr/>
     `;
 
@@ -29,6 +34,7 @@ function renderPlayers(players) {
   });
 
   addDeleteEvents();
+  addEditEvents(players);
 }
 
 // formulario de agregar jugaador
@@ -48,10 +54,15 @@ form.addEventListener("submit", async (e) => {
     roty: 0
   };
 
-  await createPlayer(newPlayer);
+  if (editingId) {
+    await updatePlayer(editingId, newPlayer);
+    editingId = null;
+  } else {
+    await createPlayer(newPlayer);
+  }
 
-  form.reset();      // limpiar form
-  loadPlayers();     // recargar lista
+  form.reset();
+  loadPlayers();
 });
 
 function addDeleteEvents() {
@@ -63,6 +74,25 @@ function addDeleteEvents() {
 
       await deletePlayer(id);
       loadPlayers(); // recargar lista
+    });
+  });
+}
+
+function addEditEvents(players) {
+  const buttons = document.querySelectorAll(".edit-btn");
+
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      const id = button.getAttribute("data-id");
+      const player = players.find(p => p.id == id);
+
+      // llenar formulario
+      document.getElementById("name").value = player.name;
+      document.getElementById("team").value = player.team;
+      document.getElementById("championships").value = player.championships;
+      document.getElementById("mvp").value = player.mvp;
+
+      editingId = id;
     });
   });
 }
