@@ -2,11 +2,13 @@ const API_URL = "http://localhost:8080";
 
 import { getPlayers } from "./api/players";
 import { createPlayer } from "./api/players";
+import { deletePlayer } from "./api/players";
 
 async function loadPlayers() {
   const players = await getPlayers();
   renderPlayers(players);
 }
+
 function renderPlayers(players) {
   const app = document.getElementById("app");
 
@@ -19,11 +21,14 @@ function renderPlayers(players) {
       <h3>${player.name}</h3>
       <p>Equipo: ${player.team}</p>
       <p>🏆 Campeonatos: ${player.championships}</p>
+      <button data-id="${player.id}" class="delete-btn">Eliminar Jugador</button>
       <hr/>
     `;
 
     app.appendChild(div);
   });
+
+  addDeleteEvents();
 }
 
 // formulario de agregar jugaador
@@ -48,6 +53,19 @@ form.addEventListener("submit", async (e) => {
   form.reset();      // limpiar form
   loadPlayers();     // recargar lista
 });
+
+function addDeleteEvents() {
+  const buttons = document.querySelectorAll(".delete-btn");
+
+  buttons.forEach(button => {
+    button.addEventListener("click", async () => {
+      const id = button.getAttribute("data-id");
+
+      await deletePlayer(id);
+      loadPlayers(); // recargar lista
+    });
+  });
+}
 
 // ejecutar al cargar
 loadPlayers();
