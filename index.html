@@ -7,6 +7,18 @@
     <title>nbatracker-frontend</title>
   </head>
   <body>
+    <form id="player-form">
+      <h2>Agregar Jugador</h2>
+
+      <input type="text" id="name" placeholder="Nombre" required />
+      <input type="text" id="team" placeholder="Equipo" required />
+      <input type="number" id="championships" placeholder="Campeonatos" min="0" />
+      <input type="number" id="mvp" placeholder="MVPs" min="0" />
+
+      <button type="submit">Crear</button>
+    </form>
+
+    <hr />
     <div id="app"></div>
     <script type="module" src="/src/main.js"></script>
   </body>

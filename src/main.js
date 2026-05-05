@@ -1,6 +1,7 @@
 const API_URL = "http://localhost:8080";
 
 import { getPlayers } from "./api/players";
+import { createPlayer } from "./api/players";
 
 async function loadPlayers() {
   const players = await getPlayers();
@@ -24,6 +25,29 @@ function renderPlayers(players) {
     app.appendChild(div);
   });
 }
+
+// formulario de agregar jugaador
+const form = document.getElementById("player-form");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const newPlayer = {
+    name: document.getElementById("name").value,
+    team: document.getElementById("team").value,
+    image_url: "",
+    championships: parseInt(document.getElementById("championships").value) || 0,
+    mvp: parseInt(document.getElementById("mvp").value) || 0,
+    finals_mvp: 0,
+    dpoy: 0,
+    roty: 0
+  };
+
+  await createPlayer(newPlayer);
+
+  form.reset();      // limpiar form
+  loadPlayers();     // recargar lista
+});
 
 // ejecutar al cargar
 loadPlayers();
