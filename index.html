@@ -19,12 +19,16 @@
             <p class="brand-sub">Estadísticas de jugadores</p>
           </div>
         </div>
+        <nav class="navbar">
+          <button class="nav-link active" data-view="players">Jugadores</button>
+          <button class="nav-link" data-view="teams">Equipos</button>
+        </nav>
       </div>
     </header>
 
-    <main class="layout">
+    <main class="layout" id="main-layout">
 
-      <aside class="sidebar">
+      <aside class="sidebar" id="sidebar">
         <div class="form-card" id="form-card">
           <h2 id="form-title">Agregar jugador</h2>
           <form id="player-form" novalidate>
@@ -39,6 +43,11 @@
               <label for="team">Equipo</label>
               <input type="text" id="team" placeholder="Los Angeles Lakers" required autocomplete="off" />
               <span class="field-error" id="team-error"></span>
+            </div>
+
+            <div class="form-group">
+              <label for="image_url">URL de imagen</label>
+              <input type="text" id="image_url" placeholder="https://..." autocomplete="off" />
             </div>
 
             <div class="form-row">
@@ -61,14 +70,15 @@
         </div>
       </aside>
 
-      <section class="content">
-        <div class="content-header">
+      <section class="content" id="content">
+        <div class="content-header" id="players-header">
           <h2 class="content-title">
             Jugadores
             <span class="badge" id="player-count">0</span>
           </h2>
         </div>
         <div id="app"></div>
+        <div class="pagination" id="pagination"></div>
       </section>
 
     </main>

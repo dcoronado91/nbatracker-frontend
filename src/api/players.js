@@ -1,8 +1,8 @@
 const API_URL = "http://localhost:8080";
 
-export async function getPlayers() {
-    const res = await fetch(`${API_URL}/players`);
-    return res.json();
+export async function getPlayers(page = 1, limit = 9) {
+    const res = await fetch(`${API_URL}/players?page=${page}&limit=${limit}`);
+    return res.json(); // { data, total, page, limit, pages }
 }
 
 export async function createPlayer(player) {
