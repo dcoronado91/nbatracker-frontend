@@ -290,6 +290,21 @@ input.invalid {
   border-color: rgba(200, 16, 46, 0.5);
 }
 
+.btn-export {
+  background: transparent;
+  color: var(--text-sub);
+  border: 1px solid var(--border-h);
+  font-size: 12px;
+  padding: 7px 14px;
+  letter-spacing: 0.04em;
+}
+
+.btn-export:hover {
+  color: var(--text);
+  border-color: var(--text-sub);
+  background: rgba(255,255,255,0.04);
+}
+
 /* === Content section === */
 .content-header {
   margin-bottom: 28px;

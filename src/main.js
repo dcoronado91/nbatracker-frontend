@@ -342,5 +342,34 @@ function addEditEvents(players) {
   });
 }
 
+// ─── CSV Export ───────────────────────────────────────────────
+document.getElementById("export-csv-btn").addEventListener("click", exportCSV);
+
+async function exportCSV() {
+  const result = await getPlayers(1, 1000);
+  const players = result.data;
+
+  const headers = ["ID", "Nombre", "Equipo", "Campeonatos", "MVPs", "Finals MVP", "DPOY", "ROTY"];
+  const rows = players.map(p => [
+    p.id,
+    `"${String(p.name).replace(/"/g, '""')}"`,
+    `"${String(p.team).replace(/"/g, '""')}"`,
+    p.championships,
+    p.mvp,
+    p.finals_mvp,
+    p.dpoy,
+    p.roty,
+  ]);
+
+  const csv = [headers.join(","), ...rows.map(r => r.join(","))].join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href     = url;
+  a.download = "jugadores.csv";
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
 // ─── Init ─────────────────────────────────────────────────────
 loadPlayers(1);
