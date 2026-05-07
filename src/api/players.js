@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8080";
+const API_URL = "https://nbatracker-backend-production.up.railway.app";
 
 export async function getPlayers(page = 1, limit = 9) {
     const res = await fetch(`${API_URL}/players?page=${page}&limit=${limit}`);
